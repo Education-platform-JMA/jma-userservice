@@ -1,10 +1,10 @@
-package ru.education_platform_jma.userservice;
+package ru.jma.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UserserviceApplicationTests {
+class UsersServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

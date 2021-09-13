@@ -1,0 +1,16 @@
+# Spring
+spring:
+  application:
+    name: users
+  # Database
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  liquibase:
+    enabled: false
+# Server
+server:
+  port: 8081
+
