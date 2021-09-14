@@ -1,14 +1,17 @@
 package ru.jma.userservice.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "usr")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@Table(name = "users")
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class User extends BaseEntity {
 
     private String username;
 
