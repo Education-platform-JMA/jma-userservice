@@ -1,6 +1,5 @@
 package ru.jma.userservice.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import ru.jma.userservice.model.User;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
-public interface UserRepository extends JpaRepository<User,Long> {}
+public interface UserRepository extends ReactiveCrudRepository {}
