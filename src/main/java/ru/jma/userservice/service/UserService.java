@@ -10,23 +10,27 @@ import ru.jma.userservice.repository.UserRepository;
 @Service
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public Flux<User> findAll() {
         return userRepository.findAll();
     }
 
-    public Mono<User> saveUser(User user) {
+    public Mono<User> save(User user) {
         return userRepository.save(user);
     }
 
-    public Mono<User> findUserById(Long id) {
+    public Mono<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
-    public Mono<Void> deleteUserById(Long id) {
-        return findUserById(id).flatMap(userRepository::delete);
+    public Mono<Void> deleteById(Long id) {
+        return findById(id).flatMap(userRepository::delete);
     }
 
 }

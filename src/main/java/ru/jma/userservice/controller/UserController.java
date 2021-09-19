@@ -12,34 +12,38 @@ import ru.jma.userservice.service.UserService;
 @RestController
 public class UserController {
 
-    @Autowired
     UserService userService;
 
-    @GetMapping("/user")
-    public Flux<User> getAllUsers() {
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/users")
+    public Flux<User> getAll() {
         return userService.findAll();
     }
 
-    @PostMapping("/user")
-    public Mono<User> saveUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    @PostMapping("/users")
+    public Mono<User> save(@RequestBody User user) {
+        return userService.save(user);
     }
 
-    @PutMapping("/user/{id}")
-    public Mono<ResponseEntity<User>> updateUser(@PathVariable("id") Long id,
+    @PutMapping("/users/{id}")
+    public Mono<ResponseEntity<User>> update(@PathVariable("id") Long id,
                                                  @RequestBody User userDetails) {
         User user = new User();
-        return userService.findUserById(id).flatMap(userData -> {
+        return userService.findById(id).flatMap(userData -> {
             user.setUsername(userDetails.getUsername());
             user.setPassword(userDetails.getPassword());
-            return userService.saveUser(userData);
+            return userService.save(userData);
         }).map(updateuser -> new ResponseEntity<>(updateuser, HttpStatus.OK))
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/user/{id}")
-    public Mono<Void> deleteUser(@PathVariable("id") Long id) {
-        return userService.deleteUserById(id);
+    @DeleteMapping("/users/{id}")
+    public Mono<Void> delete(@PathVariable("id") Long id) {
+        return userService.deleteById(id);
     }
 
 }
