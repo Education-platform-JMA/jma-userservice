@@ -31,3 +31,7 @@ logging:
     org:
       springframework:
         security: DEBUG
+# JMA properties
+jma:
+  service:
+    course: COURSES
