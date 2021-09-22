@@ -9,7 +9,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
   liquibase:
-    enabled: false
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
 # Server
 server:
   port: 8081
