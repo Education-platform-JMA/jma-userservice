@@ -21,12 +21,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Mono<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
     public Mono<User> save(User user) {
         return userRepository.save(user);
     }
 
-    public Mono<User> findById(Long id) {
-        return userRepository.findById(id);
+    public Mono<User> update(Long id, User user) {
+        return findById(id).map(animeToUpdate -> user.withId(animeToUpdate.getId()))
+                           .flatMap(userRepository::save);
     }
 
     public Mono<Void> deleteById(Long id) {

@@ -1,8 +1,6 @@
 package ru.jma.userservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -12,7 +10,7 @@ import ru.jma.userservice.service.UserService;
 @RestController
 public class UserController {
 
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -30,15 +28,9 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public Mono<ResponseEntity<User>> update(@PathVariable("id") Long id,
-                                                 @RequestBody User userDetails) {
-        User user = new User();
-        return userService.findById(id).flatMap(userData -> {
-            user.setUsername(userDetails.getUsername());
-            user.setPassword(userDetails.getPassword());
-            return userService.save(userData);
-        }).map(updateuser -> new ResponseEntity<>(updateuser, HttpStatus.OK))
-                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public Mono<User> update(@PathVariable("id") Long id,
+                             @RequestBody User user) {
+        return userService.update(id, user);
     }
 
     @DeleteMapping("/users/{id}")

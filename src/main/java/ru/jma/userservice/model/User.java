@@ -1,17 +1,19 @@
 package ru.jma.userservice.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "users")
+@Table
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class User extends BaseEntity {
+@AllArgsConstructor
+@EqualsAndHashCode
+@With
+public class User {
+
+    @Id
+    private Long id;
 
     private String username;
 
