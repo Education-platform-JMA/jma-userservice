@@ -30,7 +30,7 @@ public class UserService {
     }
 
     public Mono<User> update(Long id, User user) {
-        return findById(id).map(animeToUpdate -> user.withId(animeToUpdate.getId()))
+        return findById(id).map(userToUpdate -> user.withId(userToUpdate.getId()))
                            .flatMap(userRepository::save);
     }
 
