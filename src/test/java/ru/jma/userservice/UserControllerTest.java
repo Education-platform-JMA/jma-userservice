@@ -27,7 +27,7 @@ public class UserControllerTest {
         User user = new User((long) 1, "user", "1234");
         User user2 = new User((long) 2, "user2", "5678");
         Flux<User> userFlux = Flux.just(user, user2);
-        Mockito.when(userService.findAll()).thenReturn(userFlux);
+        Mockito.when(userService.getAllUsers()).thenReturn(userFlux);
         webTestClient.get()
                 .uri("/users")
                 .accept(MediaType.APPLICATION_JSON)
@@ -44,7 +44,7 @@ public class UserControllerTest {
     void testPostUser() {
         User user = new User((long) 1, "user", "1234");
         Mono<User> userMono = Mono.just(user);
-        Mockito.when(userService.save(user)).thenReturn(userMono);
+        Mockito.when(userService.addUser(user)).thenReturn(userMono);
         webTestClient.post()
                 .uri("/users")
                 .contentType(MediaType.APPLICATION_JSON)

@@ -1,6 +1,6 @@
 package ru.jma.userservice.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -8,34 +8,30 @@ import ru.jma.userservice.model.User;
 import ru.jma.userservice.repository.UserRepository;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public Flux<User> findAll() {
+    public Flux<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Mono<User> findById(Long id) {
+    public Mono<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
-    public Mono<User> save(User user) {
+    public Mono<User> addUser(User user) {
         return userRepository.save(user);
     }
 
-    public Mono<User> update(Long id, User user) {
-        return findById(id).map(animeToUpdate -> user.withId(animeToUpdate.getId()))
-                           .flatMap(userRepository::save);
+    public Mono<User> updateUser(Long id, User user) {
+        return getUserById(id).map(userToUpdate -> user.withId(userToUpdate.getId()))
+                              .flatMap(userRepository::save);
     }
 
-    public Mono<Void> deleteById(Long id) {
-        return findById(id).flatMap(userRepository::delete);
+    public Mono<Void> deleteUserById(Long id) {
+        return getUserById(id).flatMap(userRepository::delete);
     }
 
 }

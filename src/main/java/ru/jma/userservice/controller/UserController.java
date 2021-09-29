@@ -1,6 +1,6 @@
 package ru.jma.userservice.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -8,34 +8,31 @@ import ru.jma.userservice.model.User;
 import ru.jma.userservice.service.UserService;
 
 @RestController
+@RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    @GetMapping("/")
+    public Flux<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
-    @GetMapping("/users")
-    public Flux<User> getAll() {
-        return userService.findAll();
+    @PostMapping("/")
+    public Mono<User> addUser(@RequestBody User user) {
+        return userService.addUser(user);
     }
 
-    @PostMapping("/users")
-    public Mono<User> save(@RequestBody User user) {
-        return userService.save(user);
+    @PutMapping("/{id}")
+    public Mono<User> updateUser(@PathVariable("id") Long id,
+                                 @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
-    @PutMapping("/users/{id}")
-    public Mono<User> update(@PathVariable("id") Long id,
-                             @RequestBody User user) {
-        return userService.update(id, user);
-    }
-
-    @DeleteMapping("/users/{id}")
-    public Mono<Void> delete(@PathVariable("id") Long id) {
-        return userService.deleteById(id);
+    @DeleteMapping("/{id}")
+    public Mono<Void> deleteUser(@PathVariable("id") Long id) {
+        return userService.deleteUserById(id);
     }
 
 }
