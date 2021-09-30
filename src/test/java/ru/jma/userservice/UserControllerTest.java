@@ -1,5 +1,6 @@
 package ru.jma.userservice;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +18,24 @@ import ru.jma.userservice.service.UserService;
 public class UserControllerTest {
 
     @Autowired
-    WebTestClient webTestClient;
+    private WebTestClient webTestClient;
 
     @MockBean
-    UserService userService;
+    private UserService userService;
+
+    private static User user;
+
+    @BeforeAll
+    static void initUsers() {
+        user = new User((long) 1, "user", "1234");
+    }
 
     @Test
     void testGetUser() {
-        User user = new User((long) 1, "user", "1234");
-        User user2 = new User((long) 2, "user2", "5678");
-        Flux<User> userFlux = Flux.just(user, user2);
+        Flux<User> userFlux = Flux.just(user);
         Mockito.when(userService.getAllUsers()).thenReturn(userFlux);
         webTestClient.get()
-                .uri("/users")
+                .uri("/users/")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -42,11 +48,10 @@ public class UserControllerTest {
 
     @Test
     void testPostUser() {
-        User user = new User((long) 1, "user", "1234");
         Mono<User> userMono = Mono.just(user);
         Mockito.when(userService.addUser(user)).thenReturn(userMono);
         webTestClient.post()
-                .uri("/users")
+                .uri("/users/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userMono, User.class)
                 .exchange()
