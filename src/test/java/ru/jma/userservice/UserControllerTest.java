@@ -1,5 +1,6 @@
 package ru.jma.userservice;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,10 +16,10 @@ import ru.jma.userservice.model.User;
 import ru.jma.userservice.service.UserService;
 
 @WebFluxTest(UserController.class)
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserControllerTest {
 
-    @Autowired
-    private WebTestClient webTestClient;
+    private final WebTestClient webTestClient;
 
     @MockBean
     private UserService userService;
