@@ -16,9 +16,11 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
   liquibase:
     enabled: false
+
 # Server
 server:
   port: 8081
+
 # Eureka
 eureka:
   client:
@@ -31,3 +33,8 @@ logging:
     org:
       springframework:
         security: DEBUG
+
+# JMA properties
+jma:
+  service:
+    course: COURSES
