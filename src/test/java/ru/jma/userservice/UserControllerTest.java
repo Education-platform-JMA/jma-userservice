@@ -36,7 +36,7 @@ public class UserControllerTest {
         Flux<User> userFlux = Flux.just(user);
         Mockito.when(userService.getAllUsers()).thenReturn(userFlux);
         webTestClient.get()
-                .uri("/users/")
+                .uri("/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -52,7 +52,7 @@ public class UserControllerTest {
         Mono<User> userMono = Mono.just(user);
         Mockito.when(userService.addUser(user)).thenReturn(userMono);
         webTestClient.post()
-                .uri("/users/")
+                .uri("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userMono, User.class)
                 .exchange()

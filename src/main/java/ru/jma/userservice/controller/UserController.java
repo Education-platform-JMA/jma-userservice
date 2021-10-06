@@ -14,12 +14,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/")
+    @GetMapping
     public Flux<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Mono<User> addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
