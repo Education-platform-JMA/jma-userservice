@@ -2,20 +2,25 @@
 spring:
   application:
     name: users
+  # Database
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    h2:
+      console:
+        enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  liquibase:
+    enabled: false
   # Security
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/auth/realms/master
-  # Database
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-  liquibase:
-    enabled: false
 
 # Server
 server:

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.With;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,15 +15,25 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Table
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@With
 public class User implements UserDetails {
 
+    @Id
+    private Long id;
+
     private String username;
+
     private String password;
+
     private Set<GrantedAuthority> roles;
+
+    public User(long l, String user, String s) {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -47,4 +60,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
